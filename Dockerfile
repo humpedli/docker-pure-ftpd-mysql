@@ -51,7 +51,7 @@ VOLUME /ftpdata
 # -A chroot everyone
 # -B daemonize
 # -P external ip for passive mode
-CMD /usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -J ALL:!aNULL:!SSLv3 -E -O clf:/var/log/pure-ftpd/transfer.log -8 UTF-8 -u 30 -U 111:000 -p 30000:30009 -Y 1 -H -A -B -P $EXTERNAL_IP
+CMD /usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -J ALL:!aNULL:!SSLv3 -E -O clf:/var/log/pure-ftpd/transfer.log -8 UTF-8 -u 30 -U 111:000 -p 30000:30009 -Y 1 -H -A -B -P $EXTERNAL_IP && tail -f /var/log/*.log
 
 # expose important ports
 EXPOSE 20 21 30000-30009
