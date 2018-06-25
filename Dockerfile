@@ -31,6 +31,7 @@ RUN apt-get clean && \
 # run mysql configuration creator script
 COPY run.sh /run.sh
 RUN chmod u+x /run.sh && \
+    sleep 1 && \
     /run.sh
 
 # define important volumes
