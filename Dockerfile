@@ -28,6 +28,8 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
 RUN /run.sh
 
 VOLUME /ftpdata /etc/pure-ftpd

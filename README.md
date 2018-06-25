@@ -42,6 +42,8 @@ services:
       - "MYSQL_PASSWORD=<mysql_password>"
       - "MYSQL_DATABASE=<mysql_database>"
     links:
-      - "mysql:db"
+      - mysql:db
+    depends_on:
+      - mysql
     restart: "always"
 ```
