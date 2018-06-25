@@ -28,12 +28,12 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
-ADD run.sh /run.sh
-RUN chmod 755 /*.sh
+COPY run.sh /run.sh
+RUN chmod u+x /run.sh
 RUN /run.sh
 
 VOLUME /ftpdata /etc/pure-ftpd
 
-EXPOSE 20 21 30000-30009
+CMD /usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -P $EXTERNAL_IP
 
-CMD /usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -P $EXTERNALIP
+EXPOSE 20 21 30000-30009

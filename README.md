@@ -12,7 +12,7 @@ docker run --name=pure-ftpd-mysql \
   -v <path_to_data>:/ftpdata \
   -v <path_to_config>:/etc/pure-ftpd \
   --link mysql:db \
-  -e EXTERNALIP=<external_ip_for_passive_mode> \
+  -e EXTERNAL_IP=<external_ip_for_passive_mode> \
   -e MYSQL_USER=<mysql_user> \
   -e MYSQL_PASSWORD=<mysql_password> \
   -e MYSQL_DATABASE=<mysql_database> \
@@ -21,7 +21,7 @@ docker run --name=pure-ftpd-mysql \
   -d humpedli/docker-pureftpd-mysql
 ```
 
-# Or use docker-compose:
+### Or use docker-compose:
 
 ```bash
 version: '3'

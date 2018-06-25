@@ -36,5 +36,3 @@ echo "no" > /etc/pure-ftpd/conf/UnixAuthentication
 echo "1" > /etc/pure-ftpd/conf/TLS
 
 chown -R ftpuser:ftpgroup /ftpdata
-#tail -f > /dev/null
-service pure-ftpd-mysql start && tail -f /var/log/*.log
