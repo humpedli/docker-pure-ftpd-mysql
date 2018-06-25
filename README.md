@@ -14,7 +14,7 @@ docker run --name=pure-ftpd-mysql \
   --link mysql:mysql \
   -e EXTERNAL_IP=<external_ip_for_passive_mode> \
   -e MYSQL_HOST=mysql \
-  -e MYSQL_PORT=3306" \
+  -e MYSQL_PORT=3306 \
   -e MYSQL_USER=<mysql_user> \
   -e MYSQL_PASSWORD=<mysql_password> \
   -e MYSQL_DATABASE=<mysql_database> \
