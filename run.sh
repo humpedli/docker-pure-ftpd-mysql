@@ -3,8 +3,8 @@
 # mysql configuration
 cat << EOM > /etc/pure-ftpd/db/mysql.conf
 #MYSQLSocket        /var/run/mysqld/mysqld.sock
-MYSQLServer         db
-MYSQLPort           3306
+MYSQLServer         $MYSQL_HOST
+MYSQLPort           $MYSQL_PORT
 MYSQLUser           $MYSQL_USER
 MYSQLPassword       $MYSQL_PASSWORD
 MYSQLDatabase       $MYSQL_DATABASE

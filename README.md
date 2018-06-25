@@ -3,6 +3,7 @@ Pure-ftpd with MySQL, TLS, Quota, Bandwith control and Passive mode
 ## Usage
 
 * Create a MySQL container and import `pureftp.sql` file to create the database
+* Insert an user into previously created database
 * Run container with the following configuration:
 
 ```bash
@@ -10,9 +11,10 @@ docker run --name=pure-ftpd-mysql \
   --restart-always \
   -v <path_to_cert/cert.pem>:/etc/ssl/private/pure-ftpd.pem \
   -v <path_to_data>:/ftpdata \
-  -v <path_to_config>:/etc/pure-ftpd \
-  --link mysql:db \
+  --link mysql:mysql \
   -e EXTERNAL_IP=<external_ip_for_passive_mode> \
+  -e MYSQL_HOST=mysql \
+  -e MYSQL_PORT=3306" \
   -e MYSQL_USER=<mysql_user> \
   -e MYSQL_PASSWORD=<mysql_password> \
   -e MYSQL_DATABASE=<mysql_database> \
@@ -35,14 +37,13 @@ services:
     volumes:
       - "<path_to_cert/cert.pem>:/etc/ssl/private/pure-ftpd.pem:ro"
       - "<path_to_data>:/ftpdata"
-      - "<path_to_config>:/etc/pure-ftpd"
     environment:
       - "EXTERNAL_IP=<external_ip_for_passive_mode>"
+      - "MYSQL_HOST=mysql"
+      - "MYSQL_PORT=3306"
       - "MYSQL_USER=<mysql_user>"
       - "MYSQL_PASSWORD=<mysql_password>"
       - "MYSQL_DATABASE=<mysql_database>"
-    links:
-      - mysql:db
     depends_on:
       - mysql
     restart: "always"
