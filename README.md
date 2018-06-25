@@ -21,6 +21,8 @@ docker run --name=pure-ftpd-mysql \
   -d humpedli/docker-pureftpd-mysql
 ```
 
+# Or use docker-compose:
+
 ```bash
 version: '3'
 services:
