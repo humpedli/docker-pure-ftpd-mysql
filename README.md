@@ -6,10 +6,13 @@ Pure-ftpd with MySQL, TLS, Quota, Bandwith control and Passive mode
 * Insert an user into previously created database
 * Run container with the following configuration:
 
+---
+**Docker command:**
+
 ```bash
 docker run --name=pure-ftpd-mysql \
   --restart-always \
-  -v <path_to_cert/cert.pem>:/etc/ssl/private/pure-ftpd.pem \
+  -v <path_to_pem/file.pem>:/etc/ssl/private/imported.pem:ro \
   -v <path_to_data>:/ftpdata \
   --link mysql:mysql \
   -e EXTERNAL_IP=<external_ip_for_passive_mode> \
@@ -23,7 +26,8 @@ docker run --name=pure-ftpd-mysql \
   -d humpedli/docker-pureftpd-mysql
 ```
 
-### Or use docker-compose:
+---
+**Docker compose:**
 
 ```bash
 version: '3'
@@ -35,7 +39,7 @@ services:
       - "20-21:20-21"
       - "30000-30009:30000-30009"
     volumes:
-      - "<path_to_cert/cert.pem>:/etc/ssl/private/pure-ftpd.pem:ro"
+      - "<path_to_pem/file.pem>:/etc/ssl/private/imported.pem:ro"
       - "<path_to_data>:/ftpdata"
     environment:
       - "EXTERNAL_IP=<external_ip_for_passive_mode>"
@@ -47,4 +51,23 @@ services:
     depends_on:
       - mysql
     restart: "always"
+```
+
+---
+### If you have separated private key and cert for TLS define like this:
+
+**Docker command:**
+
+```bash
+-v <path_to_key/key.pem>:/etc/ssl/private/imported-key.pem:ro \
+-v <path_to_cert/cert.pem>:/etc/ssl/private/imported-cert.pem:ro \
+```
+
+---
+**Docker compose:**
+
+```bash
+volumes:
+      - "<path_to_key/key.pem>:/etc/ssl/private/imported-key.pem:ro"
+      - "<path_to_cert/cert.pem>:/etc/ssl/private/imported-cert.pem:ro"
 ```
