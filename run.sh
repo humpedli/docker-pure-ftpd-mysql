@@ -3,11 +3,11 @@
 # mysql configuration
 cat << EOM > /etc/pure-ftpd/db/mysql.conf
 #MYSQLSocket        /var/run/mysqld/mysqld.sock
-MYSQLServer         $MYSQL_HOST
-MYSQLPort           $MYSQL_PORT
-MYSQLUser           $MYSQL_USER
-MYSQLPassword       $MYSQL_PASSWORD
-MYSQLDatabase       $MYSQL_DATABASE
+MYSQLServer         ${MYSQL_HOST:-mysql}
+MYSQLPort           ${MYSQL_PORT:-3306}
+MYSQLUser           ${MYSQL_USER:-pureftpd}
+MYSQLPassword       ${MYSQL_PASSWORD:-password}
+MYSQLDatabase       ${MYSQL_DATABASE:-pureftpd}
 MYSQLCrypt          md5
 MYSQLGetPW          SELECT Password FROM ftpd WHERE User="\L" AND status="1" AND (ipaccess = "*" OR ipaccess LIKE "\R")
 MYSQLGetUID         SELECT Uid FROM ftpd WHERE User="\L" AND status="1" AND (ipaccess = "*" OR ipaccess LIKE "\R")
@@ -18,3 +18,19 @@ MySQLGetBandwidthDL SELECT DLBandwidth FROM ftpd WHERE User="\L"AND status="1" A
 MySQLGetQTASZ       SELECT QuotaSize FROM ftpd WHERE User="\L"AND status="1" AND (ipaccess = "*" OR ipaccess LIKE "\R")
 MySQLGetQTAFS       SELECT QuotaFiles FROM ftpd WHERE User="\L"AND status="1" AND (ipaccess = "*" OR ipaccess LIKE "\R")
 EOM
+
+# run command
+# -l define login/mysql configuration
+# -J define TLS cypher
+# -E no anonymous connect
+# -O alt log
+# -8 filesystem charset
+# -u min uid
+# -U file/dir umask
+# -p passive port range
+# -Y TLS
+# -H dont resolve dns
+# -A chroot everyone
+# -B daemonize
+# -P external ip for passive mode
+/usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -J ALL:!aNULL:!SSLv3 -E -O clf:/var/log/pure-ftpd/transfer.log -8 UTF-8 -u 30 -U 111:000 -p 30000:30009 -Y 1 -H -A -B -P ${EXTERNAL_IP:-localhost} && tail -f /var/log/*.log

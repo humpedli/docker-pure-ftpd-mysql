@@ -30,28 +30,13 @@ RUN apt-get clean && \
 
 # run mysql configuration creator script
 COPY run.sh /run.sh
-RUN chmod u+x /run.sh && \
-    sleep 1 && \
-    /run.sh
+RUN chmod u+x /run.sh
+
+# entry point
+ENTRYPOINT ["/run.sh"]
 
 # define important volumes
 VOLUME /ftpdata
-
-# run command
-# -l define login/mysql configuration
-# -J define TLS cypher
-# -E no anonymous connect
-# -O alt log
-# -8 filesystem charset
-# -u min uid
-# -U file/dir umask
-# -p passive port range
-# -Y TLS
-# -H dont resolve dns
-# -A chroot everyone
-# -B daemonize
-# -P external ip for passive mode
-CMD /usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -J ALL:!aNULL:!SSLv3 -E -O clf:/var/log/pure-ftpd/transfer.log -8 UTF-8 -u 30 -U 111:000 -p 30000:30009 -Y 1 -H -A -B -P $EXTERNAL_IP && tail -f /var/log/*.log
 
 # expose important ports
 EXPOSE 20 21 30000-30009
