@@ -20,8 +20,7 @@ RUN apt-get update &&  apt-get -y dist-upgrade && \
 
 # setup ftpgroup and ftpuser
 RUN groupadd ftpgroup && \
-    useradd -g ftpgroup -d /dev/null -s /etc ftpuser && \
-    chown -R ftpuser:ftpgroup /ftpdata
+    useradd -g ftpgroup -d /dev/null -s /etc ftpuser
 
 # cleanup
 RUN apt-get clean && \
