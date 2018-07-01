@@ -48,4 +48,4 @@ fi
 # -A chroot everyone
 # -B daemonize
 # -P external ip for passive mode
-/usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -E -O clf:/var/log/pure-ftpd/transfer.log -8 UTF-8 -u 30 -U 111:000 -p 30000:30009 -Y $TLS -H -A -B -P ${EXTERNAL_IP:-localhost} && tail -f /var/log/*.log
+/usr/sbin/pure-ftpd-mysql -l mysql:/etc/pure-ftpd/db/mysql.conf -E -O clf:/var/log/pure-ftpd/transfer.log -c 100 -C 100 -8 UTF-8 -u 30 -U 111:000 -p 30000:30009 -Y $TLS -H -A -B -P ${EXTERNAL_IP:-localhost} && tail -f /var/log/*.log

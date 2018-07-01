@@ -18,9 +18,10 @@ RUN apt-get update &&  apt-get -y dist-upgrade && \
     dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-mysql*.deb && \
     apt-mark hold pure-ftpd pure-ftpd-mysql pure-ftpd-common
 
-# setup ftpgroup and ftpuser
-RUN groupadd ftpgroup && \
-    useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+# add docker user and group
+RUN groupadd -g 999 docker
+RUN useradd -u 111 -g 999 -d /dev/null -s /usr/sbin/nologin docker
+RUN chown -R docker:docker /ftpdata
 
 # cleanup
 RUN apt-get clean && \
