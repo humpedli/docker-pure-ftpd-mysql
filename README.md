@@ -11,7 +11,7 @@ Pure-ftpd with MySQL, TLS, Quota, Bandwith control and Passive mode
 
 ```bash
 docker run --name=pure-ftpd-mysql \
-  --restart-always \
+  --restart=always \
   -v <path_to_pem/file.pem>:/etc/ssl/private/imported.pem:ro \
   -v <path_to_data>:/ftpdata \
   --link mysql:mysql \
