@@ -14,6 +14,7 @@ docker run --name=pure-ftpd-mysql \
   --restart=always \
   -v <path_to_pem/file.pem>:/etc/ssl/private/imported.pem:ro \
   -v <path_to_data>:/ftpdata \
+  -v /etc/localtime:/etc/localtime:ro \
   --link mysql:mysql \
   -e EXTERNAL_IP=<external_ip_for_passive_mode> \
   -e MYSQL_HOST=mysql \
@@ -41,6 +42,7 @@ services:
     volumes:
       - "<path_to_pem/file.pem>:/etc/ssl/private/imported.pem:ro"
       - "<path_to_data>:/ftpdata"
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
       - "EXTERNAL_IP=<external_ip_for_passive_mode>"
       - "MYSQL_HOST=mysql"

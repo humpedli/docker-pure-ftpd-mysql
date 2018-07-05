@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 # install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update &&  apt-get -y dist-upgrade && \
-    apt-get -y --force-yes install openssl dpkg-dev debhelper && \
+    apt-get -y --force-yes install openssl dpkg-dev debhelper syslog-ng-core syslog-ng && \
     apt-get -y build-dep pure-ftpd-mysql && \
     mkdir /ftpdata && \
     mkdir /tmp/pure-ftpd-mysql && \
