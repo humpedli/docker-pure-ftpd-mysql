@@ -1,4 +1,14 @@
-FROM ubuntu:18.04
+FROM debian:buster as builder
+
+# properly setup debian sources
+ENV DEBIAN_FRONTEND noninteractive
+RUN echo "deb http://http.debian.net/debian buster main\n\
+deb-src http://http.debian.net/debian buster main\n\
+deb http://http.debian.net/debian buster-updates main\n\
+deb-src http://http.debian.net/debian buster-updates main\n\
+deb http://security.debian.org buster/updates main\n\
+deb-src http://security.debian.org buster/updates main\n\
+" > /etc/apt/sources.list
 
 # install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -14,7 +24,7 @@ RUN apt-get update &&  apt-get -y dist-upgrade && \
     dpkg-buildpackage -b -uc && \
     dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-common*.deb && \
     apt-get -y install openbsd-inetd \
-    mysql-client && \
+    default-mysql-client && \
     dpkg -i /tmp/pure-ftpd-mysql/pure-ftpd-mysql*.deb && \
     apt-mark hold pure-ftpd pure-ftpd-mysql pure-ftpd-common
 
